@@ -1,0 +1,11 @@
+- name: Reloading config
+  shell: kubeadm reset -f
+
+- name: Copy Token to Join cluster
+  ansible.builtin.copy:
+    src: files/token.sh
+    dest: /tmp/token.sh
+    mode: u=rwx,g=r,o=r
+
+- name: Execute Join
+  command: sh /tmp/token.sh

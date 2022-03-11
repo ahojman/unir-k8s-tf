@@ -1,0 +1,22 @@
+- name: Enable NFS Server service
+  systemd:
+    name: nfs-server
+    state: started
+    enabled: true
+
+- name: Create Directory
+  ansible.builtin.file:
+   path: /srv/nfs
+   state: directory
+   mode: '0755'
+
+- name: Replace /etc/exports file to allow access from other VMs
+  ansible.builtin.copy:
+   src: files/exports
+   dest: /etc/exports
+   mode: u=rw,g=r,o=r
+
+- name: Refresh Exports
+  shell: |
+    exportfs -r
+    exportfs -s

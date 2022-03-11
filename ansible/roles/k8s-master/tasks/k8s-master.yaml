@@ -1,0 +1,52 @@
+- name: export KUBECONFIG
+  shell: export KUBECONFIG=/etc/kubernetes/admin.conf
+
+- name: Pull Kubeadm images
+  shell: kubeadm config images pull
+
+# - name: Install CNI for Internal POD Networking
+#   shell: kubeadm init --pod-network-cidr=192.168.0.0/16
+
+- name: .kube Config directory
+  ansible.builtin.file:
+    path: /root/.kube
+    state: directory
+    mode: u=rw,g=r,o=r
+    recurse: yes
+
+- name: Copy .kube config file
+  shell: |
+        cp -p /etc/kubernetes/admin.conf /root/.kube/config
+        chown $(id -u):$(id -g) /root/.kube/config
+
+# https://github.com/jadebustos/devopslabs/blob/master/labs-ansible/generate-linux-pass-hash.yaml
+
+- name: Capture Cluster Join token to a var
+  command: kubeadm token create --print-join-command
+  register: k8s_token_var
+
+- name: Land captured token into a local file
+  local_action: copy content="{{ k8s_token_var.stdout_lines[0] }}" dest=files/token.sh
+  become: no    # otherwise, will fail from being root (inherited)
+
+# Little sleep for the Master to be up
+- pause: seconds=10
+
+- name: Sanity check
+  command: kubectl get nodes
+  register: sanity_output
+
+- debug: msg="{{ sanity_output.stdout }}"
+
+- name: Deploy Calico network driver
+  command: kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
+
+- name: Reboot to refresh Network config
+  reboot:
+      reboot_timeout: 3600
+
+# Little sleep for the Master to be up
+- pause: seconds=10
+
+- name: Deploy HAProxy
+  shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/master/deploy/haproxy-ingress.yaml

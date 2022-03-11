@@ -1,0 +1,45 @@
+---
+- name: Bootstrapping Environment
+  hosts: all
+  vars_files:
+    - "group_vars/vars.yaml" 
+  gather_facts: true
+  become: true
+  roles:
+    - bootstrap
+
+- name: Install NFS Server
+  hosts: nfsserver
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: true
+  become: true
+  roles:
+    - nfs
+
+- name: Install Kubernetes on Master and Node Pools
+  hosts: k8smaster,k8snodepool
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: true
+  become: true
+  roles:
+    - k8s-bootstrap
+
+- name: Config Master Node
+  hosts: k8smaster
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: true
+  become: true
+  roles:
+    - k8s-master
+
+- name: Config Node Pool
+  hosts: k8snodepool
+  vars_files:
+    - "group_vars/vars.yaml"
+  gather_facts: true
+  become: true
+  roles:
+    - k8s-node

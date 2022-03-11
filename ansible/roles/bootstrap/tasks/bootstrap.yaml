@@ -1,0 +1,42 @@
+---
+- name: Set Timezome
+  shell: timedatectl set-timezone Europe/Madrid
+
+- name: Enabling NTP for Time
+  shell: |
+          timedatectl set-ntp true
+
+- name: Disabling SELinux
+  shell: |
+         sed -i s/=enforcing/=disabled/g /etc/selinux/config
+
+# - name: Upgrade all packages - Takes Time!
+#   dnf:
+#     name: "*"
+#     state: latest
+#     update_cache: no
+
+- name: Adding Required Packages - Takes Time!
+  dnf:
+    name:
+      - python3
+      - nfs4-acl-tools
+      - net-tools
+      - nfs-utils
+      - chrony
+      - wget      
+    state: latest
+
+- name: Enabling ChronyD
+  systemd:
+   name: chronyd
+   state: started
+   enabled: yes
+
+- name: Allow Zone Drifting to No
+  shell: |
+          sed -i s/AllowZoneDrifting=yes/AllowZoneDrifting=no/g /etc/firewalld/firewalld.conf
+
+- name: Reboot due to SELinux
+  reboot:
+      reboot_timeout: 3600

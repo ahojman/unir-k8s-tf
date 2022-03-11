@@ -1,0 +1,14 @@
+[all:vars]
+ansible_user=azureadmin
+ansible_ssh_private_key= "~/.ssh/unir-azure.pub"
+host_key_checking = False
+
+[nfsserver]
+20.224.201.39
+
+[k8smaster]
+20.224.201.39
+
+[k8snodepool]
+20.126.12.241
+20.224.201.172
