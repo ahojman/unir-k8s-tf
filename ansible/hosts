@@ -4,11 +4,11 @@ ansible_ssh_private_key= "~/.ssh/unir-azure.pub"
 host_key_checking = False
 
 [nfsserver]
-20.224.201.39
+<<PLACE HERE THE 'master_pip' IP FROM OUTPUTS.TXT FILE>>
 
 [k8smaster]
-20.224.201.39
+<<PLACE HERE THE 'master_pip' IP FROM OUTPUTS.TXT FILE>>
 
 [k8snodepool]
-20.126.12.241
-20.224.201.172
+<<PLACE HERE ONE OF THE 'nodes_pip' IP FROM OUTPUTS.TXT FILE>>
+<<PLACE HERE ONE OF THE 'nodes_pip' IP FROM OUTPUTS.TXT FILE>>
