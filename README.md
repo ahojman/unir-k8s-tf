@@ -22,7 +22,7 @@ This will help the automation to reach Azure Cloud directly. 🔐
 ### ⏲️ Quick Usage Guide
 
 1. Clone this repo on your local.
-2. Execute `./deploy-infra.sh` scipt to trigger Terraform and create Azure components.
+2. Execute `./deploy-infra.sh` script to trigger Terraform and create Azure components.
 3. Wait some minutes for its completion.
 4. A new file will be generated on your directory, called `outputs.txt`; it will have the IP addresses for the whole Environment
 5. Use these IPs to replace on Ansible [hosts] file.
