@@ -1,8 +1,8 @@
 # Azure + Terraform + Ansible + Kubernetes
 
 ### Requirements
-- Ansible (steps available [here])
-- Terraform (binary's here: [link])
+- Ansible (steps available to install [here])
+- Terraform (binary's here for download [link])
 - An Azure Service Principal and its secret (more [information] on how to generate it)
 
 [here]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems
