@@ -10,28 +10,28 @@ resource "azurerm_linux_virtual_machine" "vm_master" {
   network_interface_ids           = [azurerm_network_interface.vm_nic_master.id]
   disable_password_authentication = true
 
-    admin_ssh_key {
-        username   = var.ssh_user
-        public_key = file(var.public_key_path)
-    }
+  admin_ssh_key {
+    username   = var.ssh_user
+    public_key = file(var.public_key_path)
+  }
 
-    os_disk {
-        caching              = "ReadWrite"
-        storage_account_type = "Standard_LRS"
-    }
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
 
-    plan {
-        name      = "centos-8-stream-free"
-        product   = "centos-8-stream-free"
-        publisher = "cognosys"
-    }
+  plan {
+    name      = "centos-8-stream-free"
+    product   = "centos-8-stream-free"
+    publisher = "cognosys"
+  }
 
-    source_image_reference {
-        publisher = "cognosys"
-        offer     = "centos-8-stream-free"
-        sku       = "centos-8-stream-free"
-        version   = "1.2019.0810"
-    }
+  source_image_reference {
+    publisher = "cognosys"
+    offer     = "centos-8-stream-free"
+    sku       = "centos-8-stream-free"
+    version   = "1.2019.0810"
+  }
 }
 
 resource "azurerm_network_interface" "vm_nic_master" {
