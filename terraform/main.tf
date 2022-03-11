@@ -1,5 +1,3 @@
-# Andres Hojman
-
 terraform {
   required_providers {
     azurerm = {
