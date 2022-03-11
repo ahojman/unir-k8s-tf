@@ -1,5 +1,3 @@
-# Andres Hojman
-
 provider "azurerm" {
   features {}
   subscription_id = var.azure_sub_id
