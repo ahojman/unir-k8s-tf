@@ -7,13 +7,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name  = var.vm_role[count.index]
   count = length(var.vm_role)
 
-  admin_username                  = "azureadmin"
+  admin_username                  = var.ssh_user
   network_interface_ids           = [azurerm_network_interface.vm_nic[count.index].id]
   disable_password_authentication = true
 
     admin_ssh_key {
-      username   = "azureadmin"
-      public_key = file("~/.ssh/unir-azure.pub")
+      username   = var.ssh_user
+      public_key = file(var.public_key_path)
     }
 
     os_disk {

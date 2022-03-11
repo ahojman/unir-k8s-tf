@@ -19,9 +19,9 @@ variable "azure_sub_id" {
   sensitive   = true
 }
 
-variable "location" {
-  default = "westeurope"
-}
+# variable "location" {
+#   default = "westeurope"
+# }
 
 variable "vm_role" {
   type    = list(string)

@@ -2,4 +2,4 @@
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 
-ansible-playbook -i ansible/hosts ansible/main.yaml
+ansible-playbook -i hosts main.yaml
